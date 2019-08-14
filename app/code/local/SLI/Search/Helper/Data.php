@@ -255,7 +255,13 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
      */
     public function getCronTimeAsCrontab($frequency, $time) {
         list($hours, $minutes, $seconds) = $time;
-
+        /**
+         * [0] = minutes
+         * [1] = hours
+         * [2] = day of month
+         * [3] = month
+         * [4] = day of week
+         */
         $cron = array("*", "*", "*", "*", "*");
 
         //Parse through time
@@ -269,6 +275,18 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
 
         //Parse through frequencies
         switch ($frequency) {
+            case "3H":
+                $cron[1] = '*/3';
+                $cron[0] = '00';
+                break;
+            case "6H":
+                $cron[1] = '*/6';
+                $cron[0] = '00';
+                break;
+            case "12H":
+                $cron[1] = '*/12';
+                $cron[0] = '00';
+                break;
             case "W":
                 $cron[4] = 0;
                 break;
@@ -291,22 +309,46 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
         list($hours, $minutes, $seconds) = explode(',', $this->getCronTime());
 
         $time = Mage::app()->getLocale()->date();
-        $time->setHour($hours)->setMinute($minutes)->setSecond($seconds);
+        $time->setHour(0)->setMinute(0)->setSecond(0);
 
         //Parse through frequencies
         switch ($frequency) {
+            case "3H":
+                if ($time->compare($now) == -1) {
+                    while($time->isEarlier($now)){
+                        $time->addHour(3);
+                    }
+                }
+                break;
+            case "6H":
+                if ($time->compare($now) == -1) {
+                    while($time->isEarlier($now)){
+                        $time->addHour(6);
+                    }
+                }
+                break;
+            case "12H":
+                if ($time->compare($now) == -1) {
+                    while($time->isEarlier($now)){
+                        $time->addHour(12);
+                    }
+                }
+                break;
             case "D":
+                $time->setHour($hours)->setMinute($minutes)->setSecond($seconds);
                 if ($time->compare($now) == -1) {
                     $time->addDay(1);
                 }
                 break;
             case "W":
+                $time->setHour($hours)->setMinute($minutes)->setSecond($seconds);
                 $time->setWeekday(7);
                 if ($time->compare($now) == -1) {
                     $time->addWeek(1);
                 }
                 break;
             case "M":
+                $time->setHour($hours)->setMinute($minutes)->setSecond($seconds);
                 $time->setDay(1);
                 if ($time->compare($now) == -1) {
                     $time->addMonth(1);
@@ -365,7 +407,7 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
                 $cartInfoArray['TotalPrice'] = $totals['grand_total']->getValue();
             
             if( $totals['tax'] )
-				$cartInfoArray['TotalTax'] = $totals['tax']->getValue();            
+                $cartInfoArray['TotalTax'] = $totals['tax']->getValue();            
         }
         
         //Get The Cart Total Discount Amount

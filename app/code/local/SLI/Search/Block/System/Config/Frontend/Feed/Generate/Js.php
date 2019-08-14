@@ -35,7 +35,7 @@ class SLI_Search_Block_System_Config_Frontend_Feed_Generate_Js extends Mage_Admi
     public function getGenerateUrl() {
         $curStore = Mage::app()->getStore();
         Mage::app()->setCurrentStore(1); //default store number...always 1
-        $myUrl = Mage::getUrl('sli_search/search/runFeedGeneration');
+        $myUrl = Mage::getUrl('sli_search/search/runFeedGeneration', array('_secure' => Mage::app()->getStore()->isCurrentlySecure()));
         Mage::app()->setCurrentStore($curStore);
         return $myUrl;
     }

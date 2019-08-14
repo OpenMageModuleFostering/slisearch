@@ -20,10 +20,8 @@
 ?>
 <form name="searchform" action="<?php echo $this->getSearchUrl() ?>" method="get" id="SliSearchProductForm" onsubmit="ajaxsearchsubmit(this);return false;">
     <div class="form-search">
-        <label for="search">Search:</label>
-        <input type="hidden" name="p" value="Q" />
-        <input type="hidden" name="asug" />
-        <input type="text" name="w" id="sli_search_1" class="input-text" autocomplete="off" size="20"/>
+        <label for="sli_search_1">Search:</label>
+        <input type="text" name="w" id="sli_search_1" class="input-text" autocomplete="off" />
         <button type="submit" title="<?php echo $this->__('Search') ?>" class="button"><span><span><?php echo $this->__('Search') ?></span></span></button>
     </div>
     <script type="text/javascript">
@@ -34,17 +32,15 @@
 </form>
 <?php echo $this->getInlineAutocompleteJs(); ?>
 <script type="text/javascript">
-function ajaxsearchsubmit(form){
-        var search = encodeURIComponent(form.w.value);
-        if (ajaxsearch) {
+    function ajaxsearchsubmit(form){
+            var search = encodeURIComponent(form.w.value);
+            if (typeof ajaxsearch !== 'undefined' && ajaxsearch) {
                 window.location=slibaseurlsearch+"#w="+search
-        } else {
-                var asug = encodeURIComponent(form.asug.value);
-                window.location=slibaseurlsearch+"?w="+search+"&asug="+asug;
-
-        }
-        return false;
-}
+            } else {
+                window.location=slibaseurlsearch+"?w="+search;
+            }
+            return false;
+    }
 </script>
 
 

@@ -268,8 +268,9 @@
                         </email>
                         <frequency translate="label">
                             <label>Frequency</label>
+                            <comment>Hourly times from 12:00AM</comment>
                             <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_cron_frequency</source_model>
+                            <source_model>sli_search/system_config_source_cron_frequency</source_model>
                             <backend_model>sli_search/system_config_backend_cron</backend_model>
                             <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
@@ -278,6 +279,7 @@
                         </frequency>
                         <time translate="label">
                             <label>Start Time</label>
+                            <comment>Only used when set to Daily, Weekly or Monthly</comment>
                             <frontend_type>time</frontend_type>
                             <sort_order>200</sort_order>
                             <show_in_default>1</show_in_default>
@@ -305,7 +307,7 @@
                     <fields>
                         <attributes translate="label">
                             <label>Attributes to include</label>
-                            <comment>The following attributes are automatically added to the feed: Name, URL, Children Ids, and Categories.</comment>
+                            <comment>The following attributes are automatically added to the feed: Name, URL, Children Ids, Categories and Product Ids.</comment>
                             <frontend_type>minigrid</frontend_type>
                             <source_model>sli_search/system_config_source_minigrid_attributes</source_model>
                             <backend_model>sli_search/system_config_backend_minigrid</backend_model>

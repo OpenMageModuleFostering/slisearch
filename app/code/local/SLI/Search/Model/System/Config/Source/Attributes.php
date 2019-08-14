@@ -21,10 +21,11 @@ class SLI_Search_Model_System_Config_Source_Attributes {
 
     //These attributes are automatically included in the feed and thus dont need
     //to be selectable on the configuration
-    protected $_automaticAttributes = array('name', 'url_path', 'status', 'type_id');
+    protected $_automaticAttributes = array('name', 'url_path', 'status', 'type_id','product_id');
 
-    //Remove attributes that do not need to be included in the feed.
-    protected $_blockedAttributes = array('category_id');
+    //Remove attributes that do not need to be included in the feed or cause issues 
+    //in feed generation when selected.
+    protected $_blockedAttributes = array('category_id','category_ids');
 
     /**
      * We want these attributes to appear in the drop down configuration menu, but they are not included in the

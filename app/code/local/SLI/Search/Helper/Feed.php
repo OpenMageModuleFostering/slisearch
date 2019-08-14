@@ -137,7 +137,16 @@ class SLI_Search_Helper_Feed {
         foreach (scandir($path) as $file) {
             $fullFile = $path.DS.$file;
             if (is_file($fullFile) && !is_dir($fullFile) && is_numeric(strpos($file, '.lock'))) {
-                return true;
+                $modification_time = filemtime($fullFile);
+                if(!$modification_time) {
+                    return true;
+                }else {
+                    if ((time() - filemtime($fullFile)) > (24 * 60 * 60)) { // Check if older than 1 day
+                        unlink($fullFile); // Lock file older than a day so remove it
+                        return false;
+                    }
+                    return true;
+                }
             }
         }
         return false;

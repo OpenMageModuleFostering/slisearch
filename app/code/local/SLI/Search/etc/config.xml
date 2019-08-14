@@ -20,7 +20,7 @@
 <config>
     <modules>
         <SLI_Search>
-            <version>2.1.0</version>
+            <version>2.1.2</version>
         </SLI_Search>
     </modules>
     <global>
@@ -73,7 +73,7 @@
     <default>
         <sli_search>
             <general>
-                <enabled>1</enabled>
+                <enabled>2</enabled>
                 <log_level>1</log_level>
                 <price_feed>0</price_feed>
             </general>
@@ -99,7 +99,7 @@
             </js>
             <cron>
                 <email></email>
-                <frequency backend_model="adminhtml/system_config_backend_product_alert_cron">D</frequency>
+                <frequency backend_model="sli_search/system_config_backend_cron">D</frequency>
                 <time>2,00,00</time>
                 <disabled>0</disabled>
             </cron>
@@ -107,8 +107,8 @@
                 <attributes backend_model="sli_search/system_config_backend_minigrid" />
             </attributes>
             <default_attributes>
-                <attributes>name,url_path<!--sku,short_description,description,meta_description,price,special_price,special_from_date,special_to_date,news_to_date,news_from_date,image,small_image,product_id,type_id--></attributes>
-            </default_attributes>            
+                <attributes>name,url_path,product_id<!--sku,short_description,description,meta_description,price,special_price,special_from_date,special_to_date,news_to_date,news_from_date,image,small_image,product_id,type_id--></attributes>
+            </default_attributes>
         </sli_search>
     </default>
     <crontab>
