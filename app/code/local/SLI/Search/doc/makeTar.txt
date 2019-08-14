@@ -1,0 +1,9 @@
+tar \
+-czvf \
+slisearch.tar.gz \
+app/code/local/SLI/Search/ \
+app/etc/modules/SLI_Search.xml \
+app/design/adminhtml/default/default/template/sli/search/ \
+app/design/frontend/base/default/template/sli/search/ \
+app/design/frontend/base/default/layout/sli/search.xml \
+shell/sli/
