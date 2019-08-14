@@ -22,6 +22,7 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
     const GENERAL_GROUP = "general/";
     const FEED_GROUP = "feed/";
     const FTP_GROUP = "ftp/";
+    const FORM_GROUP = "form/";
     const JS_GROUP = "js/";
     const CRON_GROUP = "cron/";
     const ATTR_GROUP = "attributes/";
@@ -384,6 +385,27 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
 
         return $returnJS;
     }
+
+
+    /**
+     * Checks to see if the the custom form code should be used
+     *
+     * @return bool
+     */
+    public function useCustomForm() {
+        return (bool) Mage::getStoreConfig(self::SECTION . self::FORM_GROUP . "customform");
+    }
+
+
+    /**
+     * This returns the form code from the DB
+     *
+     * @return string
+     */
+    public function getFormData() {
+        return Mage::getStoreConfig(self::SECTION . self::FORM_GROUP . "formcode");
+    }
+
 	/**
      * Render the cart grand total and total item within the cart
      * @param Mage_Sales_Model_Quote $quote
@@ -399,14 +421,14 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
                 
         //Store the item count to array
         $cartInfoArray['NumberOfItems'] = $quoteItemCount;
-        
+
         $totals = $quote->getTotals();
         if( $totals )
         {
-            if( $totals['grand_total'] )
+            if( isset($totals['grand_total']) )
                 $cartInfoArray['TotalPrice'] = $totals['grand_total']->getValue();
             
-            if( $totals['tax'] )
+            if( isset($totals['tax']) )
                 $cartInfoArray['TotalTax'] = $totals['tax']->getValue();            
         }
         
@@ -442,20 +464,22 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
         //Array of items
         $itemsArray = array();
         if( !$quote ) return false;
-        
+
         $items = $quote->getAllVisibleItems();
         
         foreach( $items as $item )
         {
+            /** @var $item Mage_Sales_Model_Quote_Item */
             if( !$item ) continue;
             
             //Declare an array to store item information
             $itemInfo = array();
+            /** @var $itemProduct Mage_Catalog_Model_Product */
             $itemProduct = $item->getProduct();
-            
+
             $itemInfo[ 'title' ] = $item->getName();
             $itemInfo[ 'sku' ] = $item->getSku();
-            $itemInfo[ 'qty' ] = $item->getQty();            
+            $itemInfo[ 'qty' ] = $item->getQty();
             //Get the item Product Object
             $product = $item->getProduct();
             //Get the original price for item product
@@ -465,8 +489,8 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
             
             $itemInfo[ 'item_url' ] = $this->getItemUrl($item);
             $itemInfo[ 'remove_url' ] = Mage::getUrl('checkout/cart/delete/', array('id'=>$item->getId()));            
-            $itemInfo[ 'image_url' ] = Mage::getModel('catalog/product_media_config')->getMediaUrl($itemProduct->getThumbnail());             
-            
+            $itemInfo[ 'image_url' ] = Mage::getModel('catalog/product_media_config')->getMediaUrl($itemProduct->getThumbnail());
+
             $itemsArray[] = $itemInfo;
         }        
         return $itemsArray;
@@ -474,10 +498,9 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
 
     /**
      * Get the item url
-     * @param cart item
+     * @param $item Mage_Sales_Model_Quote_Item
      * @return string
      */
-    
     public function getItemUrl($item)
     {
         if ($item->getRedirectUrl()) {
@@ -502,11 +525,14 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
      */
     public function getCartJSONP( $quote )
     {
-    	$form_key['form_key'] = Mage::getSingleton('core/session')->getFormKey();
+    	$key_values['form_key']     = Mage::getSingleton('core/session')->getFormKey();
+        $key_values['logged_in']    = Mage::getSingleton('customer/session')->isLoggedIn();
+        $key_values['user_name']    = $this->escapeHtml(Mage::getSingleton('customer/session')->getCustomer()->getName());
+
         $cart = $this->_renderCartTotal( $quote );
         $items['items'] = $this->_renderItemsDetail( $quote );
         
-        $result = array_merge($form_key, $cart, $items);
+        $result = array_merge($key_values, $cart, $items);
         $jsonResult = json_encode( $result );        
         //Wrap up as jsonp object
         $jsonpResult = "sliCartRequest($jsonResult)";

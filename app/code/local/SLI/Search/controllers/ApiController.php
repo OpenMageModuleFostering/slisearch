@@ -1,7 +1,22 @@
 <?php
 /**
- * Provide the URL for SLI to retrieve the current shopping cart items and all relative informations
- * An JSON file will be passback
+ *
+ * Copyright (c) 2013 S.L.I. Systems, Inc. (www.sli-systems.com) - All Rights Reserved
+ * This file is part of Learning Search Connect.
+ * Learning Search Connect is distribute under license,
+ * go to www.sli-systems.com/LSC for full license details.
+ *
+ * THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+ * PARTICULAR PURPOSE.
+ *
+ *
+ * @package SLI
+ * @subpackage Search
+ *
+ * Provide the URL for SLI to retrieve the current shopping cart items and all relative information
+ * An JSON file will be passedback
  *
  */
 class SLI_Search_ApiController extends Mage_Core_Controller_Front_Action
@@ -32,7 +47,7 @@ class SLI_Search_ApiController extends Mage_Core_Controller_Front_Action
         if( $jsonpResult )
             $this->getResponse()->setBody( $jsonpResult );
     }
-    
-	
-    
-} 
+
+
+
+}

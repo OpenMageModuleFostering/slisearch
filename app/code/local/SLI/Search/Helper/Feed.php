@@ -22,10 +22,13 @@ class SLI_Search_Helper_Feed {
     
     /**
      * Open socket to feed generation url with store id as passed parameter.
-     * 
+     *
+     *
+     * @deprecated
      * @param Mage_Core_Model_Store $store
      * @param array $urlParts
-     * @throws Mage_Core_Exception 
+     * @throws Mage_Core_Exception
+     * @throws SLI_Search_Exception
      */
     public function postToGenerateFeed($store, $urlParts) {
         $feedSocket = @fsockopen($urlParts['host'], 80, $errNo, $errStr, 10);
@@ -79,17 +82,10 @@ class SLI_Search_Helper_Feed {
         try{
             $stores = Mage::getResourceModel('core/store_collection');
 
-            if(Mage::getStoreConfig('sli_search/feed/sequential')){
-                foreach($stores as $store){
-                    $storeId = $store->getId();
-                    Mage::getModel('sli_search/feed')->setData('store_id', $storeId)->generateFeed();
-                    Mage::getModel('sli_search/feed')->setData('store_id', $storeId)->generateFeed(true);
-                }
-            }
-            else{
-                foreach($stores as $store) {
-                    $this->postToGenerateFeed($store, $urlParts);
-                }
+            foreach($stores as $store){
+                $storeId = $store->getId();
+                Mage::getModel('sli_search/feed')->setData('store_id', $storeId)->generateFeed();
+                Mage::getModel('sli_search/feed')->setData('store_id', $storeId)->generateFeed(true);
             }
         }
         catch (Exception $e) {
