@@ -9,25 +9,15 @@
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
  * PARTICULAR PURPOSE.
- * 
- * Top javascript included in head block
- * 
+ *
+ * This will cause the current feed that is being generated to stop, but will allow the next feeds to continue generating.
+ *
+ * To be used when you a stores feed needs to stop, but other stores can continue
+ *
+ *
  * @package SLI
  * @subpackage Search
  */
-
-class SLI_Search_Block_Search_JS_Top extends Mage_Core_Block_Text {
-
-    /**
-     * Set text to be javascript from system configuration
-     */
-    protected function _construct() {
-        parent::_construct();
-        $helper = Mage::helper('sli_search');
-        if ($helper->isFormEnabled(Mage::app()->getStore()->getId())) {
-			$this->addText($helper->getSLIDomainJs());
-            $this->addText($helper->getHeaderJs());
-        }
-    }
+class SLI_Search_NotificationException extends SLI_Search_Exception{
 
 }

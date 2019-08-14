@@ -31,7 +31,7 @@ class SLI_Search_Model_Feed extends Mage_Core_Model_Abstract {
     public function generateFeed($price_feed = false) {
         try {
             if (!$price_feed) {
-                echo PHP_EOL."If you had the full version of Learning Search Connect, this would have created a feed containing up to {$this->_getProductCount()} products.".PHP_EOL."Please Contact SLI to receive the full version. Call us toll free in the US: (866) 240-2812 or send us an email to sales@sli-systems.com".PHP_EOL.PHP_EOL;
+                return PHP_EOL."If you had the full version of Learning Search Connect, this would have created a feed containing up to {$this->_getProductCount()} products.".PHP_EOL."Please Contact SLI to receive the full version. Call us toll free in the US: (866) 240-2812 or send us an email to sales@sli-systems.com".PHP_EOL.PHP_EOL;
             }
         } catch (Exception $e) {
             Mage::log("Exception: {$e->getMessage()}");
