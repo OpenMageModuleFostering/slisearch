@@ -122,17 +122,6 @@ class SLI_Search_Model_Generators_GeneratorContext
         $this->productCollection
             ->addPriceData();
 
-        // these are handled in the product generator as adding price data will drop them from the collection
-        if (!$dataHelper->isIncludeOutOfStockItems($storeId)) {
-            // lets still add this here in case Magentos (internal) behaviour changes in the future
-            $logger->debug(sprintf('[%s] Exclude out of stock items', $storeId));
-            /** @var Mage_CatalogInventory_Model_Stock $stockHelper */
-            $stockHelper = Mage::getModel('cataloginventory/stock');
-            $stockHelper->addInStockFilterToCollection($this->productCollection);
-        } else {
-            $logger->debug(sprintf('[%s] Include out of stock items', $storeId));
-        }
-
         if ($dataHelper->isPriceFeedEnabled($storeId)) {
             $logger->debug("Adding tier price data...");
             $this->productCollection
@@ -164,7 +153,7 @@ class SLI_Search_Model_Generators_GeneratorContext
         $feedHelper = Mage::helper('sli_search/feed');
         $extraAttributes = $feedHelper->getExtraAttributes();
 
-        /** @var $entityCollection Mage_Catalog_Model_Resource_Product_Collection */
+        /** @var $productCollection Mage_Catalog_Model_Resource_Product_Collection */
         $productCollection = Mage::getResourceModel('catalog/product_collection');
 
         $logger->debug("Adding product attributes: " . implode(',', $extraAttributes));

@@ -71,10 +71,6 @@ class SLI_Search_Model_Generators_ProductGenerator implements SLI_Search_Model_G
         $feedHelper = Mage::helper('sli_search/feed');
         $extraAttributes = $feedHelper->getExtraAttributes();
 
-        $page = 1;
-        $processed = 0;
-        $pageSize = $generatorContext->getPageSize();
-
         // might need to iterate over more than one product collection...
         $productCollections = array(
             'mainProducts' => array(
@@ -93,10 +89,7 @@ class SLI_Search_Model_Generators_ProductGenerator implements SLI_Search_Model_G
                 'filters' => array(
                     function ($product) {
                         /** @var Mage_Catalog_Model_Product $product */
-                        /** @var Varien_Object $value */
-                        $value = $product->getData('stock_item');
-
-                        return (bool)!$value->getData('is_in_stock');
+                        return (bool)!$product->getData("is_salable");
                     }
                 )
             );
@@ -112,9 +105,20 @@ class SLI_Search_Model_Generators_ProductGenerator implements SLI_Search_Model_G
             $productCollection = $productCollectionDetails['collection'];
             $productFilters = $productCollectionDetails['filters'];
 
+            $processed = 0;
+            $page = 1;
+            $pageSize = $generatorContext->getPageSize();
+            $lastPage = $productCollection->getLastPageNumber();
+
             $logger->debug(sprintf('Writing products for collection %s...', $collectionKey));
 
+            $this->addInventoryDataToCollection($feedHelper, $logger, $collectionKey, $productCollection);
+
+            $collectionCount = 0;
             while ($products = $productCollection->getItems()) {
+
+                $logger->debug(sprintf('Started processing product page %s for collection %s', $page,
+                    $collectionKey));
                 if ($review) {
                     $logger->debug("Adding review data for page: $page");
                     $review->appendSummary($productCollection);
@@ -136,6 +140,8 @@ class SLI_Search_Model_Generators_ProductGenerator implements SLI_Search_Model_G
 
                     return false;
                 });
+                $logger->debug(sprintf('Finished filtering product page %s for collection %s', $page,
+                    $collectionKey));
 
                 /** @var $product Mage_Catalog_Model_Product */
                 foreach ($filteredProducts as $product) {
@@ -144,18 +150,22 @@ class SLI_Search_Model_Generators_ProductGenerator implements SLI_Search_Model_G
                     $this->addProductRelationshipData($product, $extraAttributes);
                     $this->writeProductData($product, $xmlWriter);
                     ++$processed;
+                    ++$collectionCount;
                 }
                 $logger->debug(sprintf('Finished processing product page %s for collection %s', $page,
                     $collectionKey));
 
                 // break out when we get less than a full page
-                if (count($products) < $pageSize) {
+                if ($page >= $lastPage) {
                     break;
                 }
 
                 $productCollection->setPage(++$page, $pageSize);
                 $productCollection->clear();
+                $this->addInventoryDataToCollection($feedHelper, $logger, $collectionKey, $productCollection);
             }
+            $logger->debug(sprintf('Finished processing %s products for collection %s', $collectionCount,
+                $collectionKey));
         }
 
         $logger->debug("Finished adding $processed products");
@@ -181,13 +191,17 @@ class SLI_Search_Model_Generators_ProductGenerator implements SLI_Search_Model_G
                 $xmlWriter->writeAttribute('count', $value->getData('reviews_count'));
                 $xmlWriter->writeAttribute('summary', $value->getData('rating_summary'));
                 $xmlWriter->endElement();
-            } else {
-                if ('stock_item' == $name) {
-                    /** @var $value Varien_Object */
-                    $xmlWriter->writeNode('is_in_stock', $value->getData('is_in_stock'));
-                } else {
-                    $xmlWriter->writeNode($name, $value);
+            } elseif ('stock_item' == $name) {
+                /** @var $value Varien_Object */
+                $inventoryAttributes = Mage::helper('sli_search/feed')->getInventoryAttributesFeed();
+                foreach($inventoryAttributes as $attribute) {
+                    // The instock attribute would be included twice otherwise.
+                    if($attribute != 'is_in_stock') {
+                        $xmlWriter->writeNode($attribute, $value->getData($attribute));
+                    }
                 }
+            } else {
+                $xmlWriter->writeNode($name, $value);
             }
         }
 
@@ -229,6 +243,20 @@ class SLI_Search_Model_Generators_ProductGenerator implements SLI_Search_Model_G
             if (in_array($label, $extraAttributes)) {
                 $product->{$method}();
             }
+        }
+    }
+
+    /**
+     * @param $feedHelper
+     * @param $logger
+     * @param $collectionKey
+     * @param $productCollection
+     */
+    protected function addInventoryDataToCollection($feedHelper, $logger, $collectionKey, $productCollection) {
+        if (!empty($feedHelper->getInventoryAttributesFeed())) {
+            $logger->debug(sprintf('Adding inventory data to collection', $collectionKey));
+            // Add the stock data to the product
+            Mage::getModel('cataloginventory/stock')->addItemsToProducts($productCollection);
         }
     }
 }

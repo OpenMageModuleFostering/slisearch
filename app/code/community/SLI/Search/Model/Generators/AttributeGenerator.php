@@ -77,21 +77,36 @@ class SLI_Search_Model_Generators_AttributeGenerator implements SLI_Search_Model
         $attributeCollection = Mage::getResourceModel('catalog/product_attribute_collection');
         $attributeCollection->addStoreLabel($storeId);
 
-        /** @var $attribute Mage_Eav_Model_Entity_Attribute */
-        foreach ($attributeCollection as $attribute) {
-            $attributeCode = $attribute->getAttributeCode();
+        $page = 1;
+        $pageSize = 1000;
+        $attributeCollection->setPageSize($pageSize);
+        $lastPage = $attributeCollection->getLastPageNumber();
 
-            $attributeKey = $attribute->getAttributeId();
-            $this->attributeValueKeys[$attributeCode] = $attributeKey;
+        while ($attributes = $attributeCollection->getItems()) {
+            $logger->debug(sprintf("[%s] Processing attribute page: %s", $storeId, $page));
+            /** @var $attribute Mage_Eav_Model_Entity_Attribute */
+            foreach ($attributes as $attribute) {
+                $attributeCode = $attribute->getAttributeCode();
 
-            // Only add the options that we require
-            if (in_array($attributeCode, $extraAttributes)) {
-                $attributeOptions = $this->getAttributeOptions($attribute, $storeId, $logger);
-                // Only add the attributes that have options
-                if ($attributeOptions) {
-                    $this->attributeValues[$attributeCode] = $attributeOptions;
+                $attributeKey = $attribute->getAttributeId();
+                $this->attributeValueKeys[$attributeCode] = $attributeKey;
+
+                // Only add the options that we require
+                if (in_array($attributeCode, $extraAttributes)) {
+                    $attributeOptions = $this->getAttributeOptions($attribute, $storeId, $logger);
+                    // Only add the attributes that have options
+                    if ($attributeOptions) {
+                        $this->attributeValues[$attributeCode] = $attributeOptions;
+                    }
                 }
             }
+
+            // break out when we get to the last page
+            if ($page >= $lastPage) {
+                break;
+            }
+            $attributeCollection->setCurPage(++$page);
+            $attributeCollection->clear();
         }
     }
 

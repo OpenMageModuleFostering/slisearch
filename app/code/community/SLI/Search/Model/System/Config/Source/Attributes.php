@@ -131,7 +131,7 @@ class SLI_Search_Model_System_Config_Source_Attributes
 
         // Add the inventory attributes
         foreach ($this->_inventoryAttributes as $label => $attributeCode) {
-            $code = self::INVENTORY_ATTRIBUTES_PREFIX . "_" . $attributeCode;
+            $code =  $attributeCode;
             $label = is_string($label) ? $label : self::INVENTORY_ATTRIBUTES_PREFIX . "_" . $attributeCode;
             $options[$code] = $label;
         }

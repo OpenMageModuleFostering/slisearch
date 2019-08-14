@@ -84,6 +84,7 @@ class SLI_Search_Model_Generators_PriceGenerator implements SLI_Search_Model_Gen
 
         /** @var $entityCollection Mage_Catalog_Model_Resource_Product_Collection */
         $entityCollection = $generatorContext->getProductCollection($storeId);
+        $lastPage = $entityCollection->getLastPageNumber();
 
         // Loop over each page of the collections
         while ($products = $entityCollection->getItems()) {
@@ -97,7 +98,7 @@ class SLI_Search_Model_Generators_PriceGenerator implements SLI_Search_Model_Gen
             $logger->debug("Finished processing page: $page");
 
             //Break out when the number of products is less than the pagesize
-            if (count($products) < $pageSize) {
+            if ($page >= $lastPage) {
                 break;
             }
             $entityCollection->setPage(++$page, $pageSize);

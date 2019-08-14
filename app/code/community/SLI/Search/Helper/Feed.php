@@ -56,6 +56,24 @@ class SLI_Search_Helper_Feed
             'visibility',
         );
 
+    /** @var array  */
+    protected $_inventoryAttributes
+        = array(
+            'qty',
+            'is_in_stock',
+            'manage_stock',
+            'backorders',
+        );
+
+    /**
+     * Get the inventory attributes
+     *
+     * @return array
+     */
+    public function getInventoryAttributes() {
+        return $this->_inventoryAttributes;
+    }
+
     /**
      * Get ajax message.
      *
@@ -274,5 +292,14 @@ class SLI_Search_Helper_Feed
         }
 
         return array_unique($attributes);
+    }
+
+    /**
+     * Return the selected inventory fields that should be included in the feed
+     *
+     * @return array
+     */
+    public function getInventoryAttributesFeed() {
+        return array_intersect($this->getInventoryAttributes(), $this->getExtraAttributes());
     }
 }

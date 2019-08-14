@@ -58,11 +58,27 @@ class SLI_Search_Model_Generators_CategoryGenerator implements SLI_Search_Model_
             ->loadChildren($recursionLevel)
             ->getChildren();
 
+        $page = 1;
+        $pageSize = 1000;
         $tree->addCollectionData(null, $sorted, $rootCategoryId, $toLoad, $onlyActiveCategories);
+        $categoryCollection = $tree->getCollection();
+        $categoryCollection->setPageSize($pageSize);
+        $lastPage = $categoryCollection->getLastPageNumber();
 
-        foreach ($tree->getCollection() as $category) {
-            $this->writeCategory($xmlWriter, $category);
-            ++$processed;
+        while ($categories = $categoryCollection->getItems()) {
+            $logger->debug(sprintf("[%s] Processing categories page: %s", $storeId, $page));
+            foreach ($categories as $category) {
+                $this->writeCategory($xmlWriter, $category);
+                ++$processed;
+            }
+
+            // break out when we get to last page
+            if ($page >= $lastPage) {
+                break;
+            }
+
+            $categoryCollection->setPage(++$page, $pageSize);
+            $categoryCollection->clear();
         }
 
         // categories
