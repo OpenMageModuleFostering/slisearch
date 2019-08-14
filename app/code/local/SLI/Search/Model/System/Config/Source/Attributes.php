@@ -23,6 +23,9 @@ class SLI_Search_Model_System_Config_Source_Attributes {
     //to be selectable on the configuration
     protected $_automaticAttributes = array('name', 'url_path', 'status', 'type_id');
 
+    //Remove attributes that do not need to be included in the feed.
+    protected $_blockedAttributes = array('category_id');
+
     /**
      * We want these attributes to appear in the drop down configuration menu, but they are not included in the
      * EAV selection. We must add them in individually.
@@ -94,7 +97,8 @@ class SLI_Search_Model_System_Config_Source_Attributes {
 
         foreach ($attributes as $attribute) {
             $code = $attribute['code'];
-            if (!in_array($attribute['code'], $this->_automaticAttributes)) {
+            if (!in_array($attribute['code'], $this->_automaticAttributes) &&
+                !in_array($attribute['code'], $this->_blockedAttributes)) {
                 $options[$code] = $code;
             }
         }

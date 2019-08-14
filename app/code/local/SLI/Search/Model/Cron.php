@@ -43,6 +43,6 @@ class SLI_Search_Model_Cron {
      * email.
      */
     protected function _sendEmail($msg) {
-        Mage::getModel('sli_search/email')->setData('msg', "test")->send();
+        Mage::getModel('sli_search/email')->setData('msg', $msg)->send();
     }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Custom SLI API, which allows SLI retrives customer cart by calling the URL
+ *
+ * 
+ */
+ --> 
+<config>	
+    <modules>    	
+        <SLI_CartInfo>
+            <version>0.1.0</version>            
+        </SLI_CartInfo>
+    </modules>    
+    
+    <global>
+        <helpers>
+            <sli_cartinfo>
+                <class>SLI_CartInfo_Helper</class>
+            </sli_cartinfo>        
+        </helpers>                     
+    </global>
+    
+    <frontend>    	
+        <routers>
+            <cartinfo>
+                <use>standard</use>
+                <args>
+                    <module>SLI_CartInfo</module>
+                    <frontName>cartinfo</frontName>
+                </args>
+            </cartinfo>
+        </routers>
+    </frontend>    
+</config>

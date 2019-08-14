@@ -9,7 +9,7 @@
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
  * PARTICULAR PURPOSE.
- *
+ * 
  *
  * @package SLI
  * @subpackage Search
@@ -30,13 +30,12 @@ class SLI_Search_Shell_Feed extends Mage_Shell_Abstract {
                 $id = $this->getArg('store');
                 if (!is_bool($id)) {
                     Mage::getModel('sli_search/feed')->setData('store_id', $id)->generateFeed();     //Standard feed
-                    Mage::getModel('sli_search/feed')->setData('store_id', $id)->generateFeed(true); //Price feed
                     echo "Feed generated for store $id.\n";
                     return true;
                 }
                 else if (count($this->_args) == 1){
-                    Mage::helper('sli_search/feed')->generateFeedsForAllStores();
-                    echo "Generating feeds for all stores.\n";
+                    Mage::getModel('sli_search/feed')->setData('store_id', 1)->generateFeed();     //Standard feed
+                    echo "Feed generated for store 1.\n";
                     return true;
                 }
             }
