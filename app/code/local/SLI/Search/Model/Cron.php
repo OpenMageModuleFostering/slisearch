@@ -21,18 +21,21 @@ class SLI_Search_Model_Cron {
      * Generates the feeds and sends email of status when done
      */
     public function generateFeeds() {
-        try {
-            Mage::helper('sli_search/feed')->generateFeedsForAllStores();
-            $msg = "Feeds Generating";
-        }
-        catch (SLI_Search_Exception $e) {
-            $msg = $e->getMessage();
-        }
-        catch (Exception $e) {
-            $msg = "Unknown Error: {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}. Please contact your sli provider.";
-        }
+        if(!Mage::getStoreConfig('sli_search/cron/disabled'))
+        {
+            try {
+                Mage::helper('sli_search/feed')->generateFeedsForAllStores();
+                $msg = "Feeds Generating";
+            }
+            catch (SLI_Search_Exception $e) {
+                $msg = $e->getMessage();
+            }
+            catch (Exception $e) {
+                $msg = "Unknown Error: {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}. Please contact your sli provider.";
+            }
 
-        $this->_sendEmail($msg);
+            $this->_sendEmail($msg);
+        }
     }
 
     /**

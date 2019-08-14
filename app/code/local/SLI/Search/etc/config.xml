@@ -20,7 +20,7 @@
 <config>
     <modules>
         <SLI_Search>
-            <version>1.8.6</version>
+            <version>2.0.4</version>
         </SLI_Search>
     </modules>
     <global>
@@ -51,24 +51,6 @@
                 </setup>
             </sli_search_setup>
         </resources>
-        <sli_search>
-            <default_attributes>
-                <sku/>
-                <short_description/>
-                <description/>
-                <meta_description/>
-                <price/>
-                <special_price/>
-                <special_from_date/>
-                <special_to_date/>
-                <news_to_date/>
-                <news_from_date/>
-                <image/>
-                <small_image/>
-                <product_id />
-                <type_id />
-            </default_attributes>
-        </sli_search>
     </global>
     <frontend>
         <routers>
@@ -125,12 +107,13 @@ document.write(unescape('%3Cscript src=&quot;' + sliJsHost + slibaseurl + '/rac/
                 <email></email>
                 <frequency backend_model="adminhtml/system_config_backend_product_alert_cron">D</frequency>
                 <time>2,00,00</time>
+                <disabled>0</disabled>
             </cron>
             <attributes>
                 <attributes backend_model="sli_search/system_config_backend_minigrid" />
             </attributes>
             <default_attributes>
-                <attributes>sku,short_description,description,meta_description,price,special_price,special_from_date,special_to_date,news_to_date,news_from_date,image,small_image,product_id,type_id</attributes>
+                <attributes>name,url_path<!--sku,short_description,description,meta_description,price,special_price,special_from_date,special_to_date,news_to_date,news_from_date,image,small_image,product_id,type_id--></attributes>
             </default_attributes>            
         </sli_search>
     </default>

@@ -17,12 +17,12 @@
  * @subpackage Search
  */
 class SLI_Search_Model_Feed extends Mage_Core_Model_Abstract {
-    
-    protected $_ajaxNotice = "Currently generating feeds...";    
+
+    protected $_ajaxNotice = "Currently generating feeds...";
     protected $_dbConnection = null;
-    
+
     protected $_totalProductCount = null;
-   
+
     /**
      * Generate feed based on store and returns success
      *
@@ -31,7 +31,7 @@ class SLI_Search_Model_Feed extends Mage_Core_Model_Abstract {
     public function generateFeed($price_feed = false) {
         try {
             if (!$price_feed) {
-                echo PHP_EOL."If you had the full version of Learning Search Connect, this would have created a feed containing up to {$this->_getProductCount()} products. Please Contact SLI to receive the full version. Call us toll free in the US: (866) 240-2812 or send us an email to discovery@sli-systems.com ".PHP_EOL;
+                echo PHP_EOL."If you had the full version of Learning Search Connect, this would have created a feed containing up to {$this->_getProductCount()} products.".PHP_EOL."Please Contact SLI to receive the full version. Call us toll free in the US: (866) 240-2812 or send us an email to sales@sli-systems.com".PHP_EOL.PHP_EOL;
             }
         } catch (Exception $e) {
             Mage::log("Exception: {$e->getMessage()}");
@@ -72,7 +72,7 @@ class SLI_Search_Model_Feed extends Mage_Core_Model_Abstract {
     }    
 
     public function getAjaxNotice() {
-        $this->_ajaxNotice = "<p style='color:red'>If you had the full version of Learning Search Connect, this would have created a feed containing up to {$this->_getProductCount()} products.<br> Please Contact SLI to receive the full version. <br>Call us toll free in the US: (866) 240-2812 or send us an email to discovery@sli-systems.com </p>";
+        $this->_ajaxNotice = "<p style='color:red'>If you had the full version of Learning Search Connect, this would have created a feed containing up to {$this->_getProductCount()} products. Please Contact SLI to receive the full version. Call us toll free in the US: (866) 240-2812 or send us an email to sales@sli-systems.com</p>";
         return $this->_ajaxNotice;
     }    
 }

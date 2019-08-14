@@ -214,14 +214,21 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
      * @return array
      */
     public function getAttributes() {
-        $attrs = Mage::getStoreConfig(self::SECTION . self::ATTR_GROUP . "attributes");
-        $default_attributes = Mage::getStoreConfig(self::SECTION . self::DEFAULT_ATTRS . "attributes");
+        $attrs = Mage::getStoreConfig(self::SECTION . self::ATTR_GROUP . "attributes", Mage::app()->getStore()->getId());
+        $default_attributes = Mage::getStoreConfig(self::SECTION . self::DEFAULT_ATTRS . "attributes", Mage::app()->getStore()->getId());
+
         $defaults = array();
+
         foreach(explode(',',$default_attributes) as $attr) {
             if($attr && trim($attr) != '') $defaults[] = array('attribute'=>trim($attr));
         }
-        $arr = array_merge_recursive($defaults, $attrs);
-        return array_merge_recursive($defaults, $attrs);
+
+        if($attrs){
+            return array_merge($defaults, $attrs);
+        }
+        else{
+            return $defaults;
+        }
     }
 
 

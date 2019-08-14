@@ -35,13 +35,21 @@ class SLI_Search_Model_System_Config_Source_Attributes {
         'type_id',
         'max_price',
         'min_price',
-        'parent_ids' => 'parent_id',
+        'parent_ids'            => 'parent_id',
+        'related_products'      => 'linked_related',
+        'upsell_products'       => 'linked_upsell',
+        'crosssell_products'    => 'linked_crosssell'
     );
 
     /**
      * Prefix to use in the dropdown to differentiate the inventory attributes
      */
-    const INVENTORY_ATTRIBUTES_PREFIX = 'inventory';
+    const LINKED_PRODUCTS_PREFIX = 'linked';    
+    
+    /**
+     * Prefix to use in the dropdown to differentiate the inventory attributes
+     */
+    const INVENTORY_ATTRIBUTES_PREFIX = 'inventory';   
 
     /**
      * Attributes from the flat inventory table that we will use for the feed
@@ -114,7 +122,6 @@ class SLI_Search_Model_System_Config_Source_Attributes {
         // Sort the array to account for the non-eav attrs being added in
         asort($options);
         
-        unset($options['price']);  //remove price from multiselect since it will be included regardless
         return $options;
     }
 }

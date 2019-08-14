@@ -23,7 +23,7 @@ function cmp($attr1, $attr2) {
 }
 
 //Save out the default attributes to the core config data table
-$defaultAttributes = Mage::getConfig()->getNode('global/sli_search/default_attributes')->asArray();
+$defaultAttributes = Mage::getConfig()->getNode('default/sli_search/default_attributes')->asArray();
 
 $productEntityType = Mage::getModel('eav/entity_type')->loadByCode('catalog_product');
 $attributeCollection = Mage::getResourceModel('eav/entity_attribute_collection')->setEntityTypeFilter($productEntityType->getId());
