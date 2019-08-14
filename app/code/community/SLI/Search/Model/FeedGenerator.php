@@ -43,6 +43,11 @@ class SLI_Search_Model_FeedGenerator
         // just to be safe
         Mage::app()->setCurrentStore($storeId);
 
+        // Disables Catalog Flat Table for LSC process.
+        // Allows all attributes to be obtained from EAV directly as they are not all stored in Flat Tables.
+        Mage::app()->getStore()->setConfig('catalog/frontend/flat_catalog_product', 0);
+        Mage::app()->getStore()->setConfig('catalog/frontend/flat_catalog_category', 0);
+        
         /** @var SLI_Search_Helper_Feed $feedHelper */
         $feedHelper = Mage::helper('sli_search/feed');
         /** @var SLI_Search_Helper_Data $dataHelper */

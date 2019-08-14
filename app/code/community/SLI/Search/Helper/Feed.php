@@ -5,7 +5,7 @@
  * Reserved
  * This file is part of Learning Search Connect.
  * Learning Search Connect is distributed under a limited and restricted
- * license – please visit www.sli-systems.com/LSC for full license details.
+ * license â€“ please visit www.sli-systems.com/LSC for full license details.
  *
  * THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -263,10 +263,13 @@ class SLI_Search_Helper_Feed
         $dataHelper = Mage::helper('sli_search/data');
 
         $attributeLines = $dataHelper->getAttributes();
-        foreach ($attributeLines as $attributeLine) {
-            if (isset($attributeLine['attribute']) && !in_array($attributeLine['attribute'], $attributes)) {
-                // just attribute names
-                $attributes[] = $attributeLine['attribute'];
+
+        if (!is_null($attributeLines)) {
+            foreach ($attributeLines as $attributeLine) {
+                if (isset($attributeLine['attribute']) && !in_array($attributeLine['attribute'], $attributes)) {
+                    // just attribute names
+                    $attributes[] = $attributeLine['attribute'];
+                }
             }
         }
 

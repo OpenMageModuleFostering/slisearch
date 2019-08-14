@@ -90,8 +90,9 @@ class SLI_Search_Helper_XmlWriter extends \XMLWriter
 
     /**
      * @param array $attributes
+     * @param array $attributeKeys
      */
-    public function writeAttributes(array $attributes)
+    public function writeAttributes(array $attributes, array $attributeKeys)
     {
         foreach ($attributes as $attributeKey => $attributeValues) {
             $this->startElement('attribute');
@@ -100,15 +101,20 @@ class SLI_Search_Helper_XmlWriter extends \XMLWriter
             $this->text($attributeKey);
             $this->endElement();
 
+            $this->startElement('attribute_id');
+            $this->text($attributeKeys[$attributeKey]);
+            $this->endElement();
+
+
             foreach ($attributeValues as $attributeValueKey => $attributeValue) {
                 $this->startElement('attributeValue');
-                $this->startElement('key');
-                $this->text($attributeValueKey);
-                $this->endElement();
+                    $this->startElement('key');
+                    $this->text($attributeValueKey);
+                    $this->endElement();
 
-                $this->startElement('value');
-                $this->text($attributeValue);
-                $this->endElement();
+                    $this->startElement('value');
+                    $this->text($attributeValue);
+                    $this->endElement();
                 $this->endElement();
             }
             $this->endElement();

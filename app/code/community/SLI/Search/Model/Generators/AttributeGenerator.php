@@ -33,6 +33,7 @@ class SLI_Search_Model_Generators_AttributeGenerator implements SLI_Search_Model
     //TODO: what is this supposed to do?
     protected $indexValueAttributes = array();
     protected $attributeValues = array();
+    protected $attributeValueKeys = array();
 
     /**
      * {@inheritdoc}
@@ -49,7 +50,7 @@ class SLI_Search_Model_Generators_AttributeGenerator implements SLI_Search_Model
         $xmlWriter->startElement('attributes');
 
         if ($this->attributeValues) {
-            $xmlWriter->writeAttributes($this->attributeValues);
+            $xmlWriter->writeAttributes($this->attributeValues, $this->attributeValueKeys);
         }
 
         // attributes
@@ -79,6 +80,10 @@ class SLI_Search_Model_Generators_AttributeGenerator implements SLI_Search_Model
         /** @var $attribute Mage_Eav_Model_Entity_Attribute */
         foreach ($attributeCollection as $attribute) {
             $attributeCode = $attribute->getAttributeCode();
+
+            $attributeKey = $attribute->getAttributeId();
+            $this->attributeValueKeys[$attributeCode] = $attributeKey;
+
             // Only add the options that we require
             if (in_array($attributeCode, $extraAttributes)) {
                 $attributeOptions = $this->getAttributeOptions($attribute, $storeId, $logger);

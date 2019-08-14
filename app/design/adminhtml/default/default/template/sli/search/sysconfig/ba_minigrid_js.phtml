@@ -30,6 +30,24 @@
  */
 ?>
 <script type="text/javascript">
+    function checkWhitespaceInputs(elementId) {
+        function hasWhiteSpace(v) {
+            return /\s/g.test(v);
+        }
+
+        var inputBox = document.getElementById(elementId);
+        if (hasWhiteSpace(inputBox.value)) {
+            //made red border
+            inputBox.style.border = "1px solid red";
+
+            //add some text to the bottom
+            var warning = document.createElement("div");
+            warning.addClassName("validation-advice");
+            warning.innerText = "Please be aware that whitespace in this field can cause issues";
+            inputBox.parentNode.insertBefore(warning, inputBox.nextSibling);
+        }
+    }
+
     function baMiniGrid() {
         return {
             /**

@@ -32,7 +32,7 @@
 <config>
     <modules>
         <SLI_Search>
-            <version>3.0.5</version>
+            <version>3.0.6</version>
         </SLI_Search>
     </modules>
     <global>

@@ -42,9 +42,6 @@ class SLI_Search_Model_Generators_ProductGenerator implements SLI_Search_Model_G
 
         $xmlWriter->startElement('products');
 
-        // Disables Catalog Flat Table for LSC process.
-        // Allows all attributes to be obtained from EAV directly as they are not all stored in Flat Tables.
-        Mage::app()->getStore()->setConfig('catalog/frontend/flat_catalog_product', 0);
 
         $this->addProductsToFeed($storeId, $generatorContext);
 

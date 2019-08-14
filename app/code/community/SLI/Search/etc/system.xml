@@ -336,8 +336,25 @@
                     <fields>
                         <attributes translate="label">
                             <label>Attributes to include</label>
-                            <comment>The following attributes are automatically added to the feed: Name, URL, Children
-                                Ids, Categories and Product Ids.
+                            <comment>The following attributes are automatically added to the feed:&lt;br&gt;
+                                &lt;table class="sli_default_attributes_table"&gt;
+                                &lt;tbody&gt;
+                                &lt;tr&gt;&lt;td&gt; Name &lt;/td&gt;&lt;td&gt;- name&lt;/td&gt; &lt;/tr&gt;
+                                &lt;tr&gt;&lt;td&gt; URL &lt;/td&gt;&lt;td&gt;- url_key, url_path&lt;/td&gt; &lt;/tr&gt;
+                                &lt;tr&gt;&lt;td&gt; Type &lt;/td&gt;&lt;td&gt;- type_id&lt;/td&gt; &lt;/tr&gt;
+                                &lt;tr&gt;&lt;td&gt; SKU &lt;/td&gt;&lt;td&gt;- sku&lt;/td&gt; &lt;/tr&gt;
+                                &lt;tr&gt;&lt;td&gt; Product Id &lt;/td&gt;&lt;td&gt;- product_id&lt;/td&gt; &lt;/tr&gt;
+                                &lt;tr&gt;&lt;td&gt; Special Price &lt;/td&gt;&lt;td&gt;- special_price&lt;/td&gt; &lt;/tr&gt;
+                                &lt;tr&gt;&lt;td&gt; Special Date &lt;/td&gt;&lt;td&gt;- special_from_date, special_to_date&lt;/td&gt; &lt;/tr&gt;
+                                &lt;tr&gt;&lt;td&gt; Is Salable &lt;/td&gt;&lt;td&gt;- is_salable&lt;/td&gt; &lt;/tr&gt;
+                                &lt;tr&gt;&lt;td&gt; Categories &lt;/td&gt;&lt;td&gt;- category_ids&lt;/td&gt; &lt;/tr&gt;
+                                &lt;tr&gt;&lt;td&gt; Visibility &lt;/td&gt;&lt;td&gt;- visibility&lt;/td&gt; &lt;/tr&gt;
+                                &lt;/tbody&gt;
+                                &lt;/table&gt;
+                                &lt;style type="text/css"&gt;
+                                    .sli_default_attributes_table{width:100%;border-collapse:collapse;}
+                                    .sli_default_attributes_table tr:nth-child(odd){background:#e5ecf2;}
+                                &lt;/style&gt;
                             </comment>
                             <frontend_type>minigrid</frontend_type>
                             <source_model>sli_search/system_config_source_minigrid_attributes</source_model>

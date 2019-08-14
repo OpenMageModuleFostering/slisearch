@@ -139,6 +139,8 @@ class SLI_Search_Block_System_Config_Form_Field_Minigrid extends Varien_Data_For
                     "<?php echo $fieldName?>",
                     <?php echo json_encode($rowData)?>,
                     <?php echo json_encode($fields)?>);
+                checkWhitespaceInputs("sli_search_ftp_user");
+                checkWhitespaceInputs("sli_search_ftp_host");
             });
         </script>
         <?php
