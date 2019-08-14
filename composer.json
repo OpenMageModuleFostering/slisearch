@@ -6,8 +6,8 @@
     "description": "LSC integrates Magento with SLI's SaaS based Learning Search, Learning Navigation and user based SEO products.",
     "authors": [
     {
-        "name": "Platform Support",
-        "email": "support@sli-systems.com"
+        "name": "Platform support",
+        "email": "support@sli-system.com"
     }
 ],
     "suggest": {
