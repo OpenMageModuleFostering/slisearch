@@ -79,18 +79,18 @@ class SLI_Search_Helper_Feed {
         try{
             $stores = Mage::getResourceModel('core/store_collection');
 
-//            if(Mage::getStoreConfig('sli_search/feed/sequential')){
-//                foreach($stores as $store){
-//                    $storeId = $store->getId();
-//                    Mage::getModel('sli_search/feed')->setData('store_id', $storeId)->generateFeed();
-//                    Mage::getModel('sli_search/feed')->setData('store_id', $storeId)->generateFeed(true);
-//                }
-//            }
-//            else{
+            if(Mage::getStoreConfig('sli_search/feed/sequential')){
+                foreach($stores as $store){
+                    $storeId = $store->getId();
+                    Mage::getModel('sli_search/feed')->setData('store_id', $storeId)->generateFeed();
+                    Mage::getModel('sli_search/feed')->setData('store_id', $storeId)->generateFeed(true);
+                }
+            }
+            else{
                 foreach($stores as $store) {
                     $this->postToGenerateFeed($store, $urlParts);
                 }
-//            }
+            }
         }
         catch (Exception $e) {
             Mage::logException($e);

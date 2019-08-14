@@ -20,7 +20,7 @@
 <config>
     <modules>
         <SLI_Search>
-            <version>2.0.4</version>
+            <version>2.0.6</version>
         </SLI_Search>
     </modules>
     <global>
@@ -92,16 +92,10 @@
                 <path></path>
             </ftp>
             <js>
-                <header>&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;
-var sliJsHost = ((&quot;https:&quot; == document.location.protocol) ? &quot;https://&quot; : &quot;http://&quot;);
-document.write(unescape('%3Clink rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;' + sliJsHost + 'assets.resultspage.com/js/rac/sli-rac.0.3.css&quot; /%3E'));
-document.write(unescape('%3Clink rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;' + sliJsHost + slibaseurl + '/rac/sli-rac.css&quot; /%3E'));
-&lt;/script&gt;</header>
-                <footer>&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;
-document.write(unescape('%3Cscript src=&quot;' + sliJsHost + slibaseurl + '/rac/sli-rac.config.js&quot; type=&quot;text/javascript&quot;%3E%3C/script%3E'));
-&lt;/script&gt;</footer>
+                <header>&lt;!-- Please get configuration from SLI Systems !--&gt;</header>
+                <footer></footer>
                 <autocomplete></autocomplete>
-                <domain>client.resultspage.com/search</domain>
+                <domain></domain>
             </js>
             <cron>
                 <email></email>

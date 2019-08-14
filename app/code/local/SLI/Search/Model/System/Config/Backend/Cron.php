@@ -26,7 +26,7 @@ class SLI_Search_Model_System_Config_Backend_Cron extends Mage_Core_Model_Config
      * and time as a cron string to a parsable path that the crontab will pick up
      */
     protected function _afterSave() {
-        $isEnabled = $this->getData('groups/general/fields/enabled/value');
+        $isEnabled = Mage::helper('sli_search')->isFeedEnabled();
 
         $frequency = $this->getData('groups/cron/fields/frequency/value');
         $time = $this->getData('groups/cron/fields/time/value');

@@ -25,7 +25,10 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
     const JS_GROUP = "js/";
     const CRON_GROUP = "cron/";
     const ATTR_GROUP = "attributes/";
-    const DEFAULT_ATTRS = "default_attributes/";    
+    const DEFAULT_ATTRS = "default_attributes/";  
+    const ENABLED = 1;
+    const DISABLED = 2;
+    const FEEDENABLED = 3;  
 
     /**
      * Returns true/false on whether or not the module is enabled
@@ -33,7 +36,18 @@ class SLI_Search_Helper_Data extends Mage_Core_Helper_Abstract {
      * @return boolean
      */
     public function isEnabled($store_id = 0) {
-        return (bool) Mage::app()->getStore($store_id)->getConfig(self::SECTION . self::GENERAL_GROUP . 'enabled');
+        $enabled = Mage::app()->getStore($store_id)->getConfig(self::SECTION . self::GENERAL_GROUP . 'enabled');
+        return (bool) ($enabled == self::ENABLED) ? 1 : 0; 
+    }
+
+    /**
+     * Returns true/false on whether or not the feed is enabled
+     *
+     * @return boolean
+     */
+    public function isFeedEnabled($store_id = 0) {
+        $feedEnabled = Mage::app()->getStore($store_id)->getConfig(self::SECTION . self::GENERAL_GROUP . 'enabled');
+        return (bool) ($feedEnabled != self::DISABLED) ? 1 : 0; 
     }
 
     /**
