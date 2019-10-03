@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/slisearch",
+    "name": "OpenMageModuleFostering\/slisearch",
     "type": "magento-module",
     "license": "SLI-Feed-Generation",
     "homepage": "",
     "description": "LSC integrates Magento with SLI's SaaS based Learning Search, Learning Navigation and user based SEO products.",
     "authors": [
-    {
-        "name": "Platform support",
-        "email": "support@sli-system.com"
-    }
-],
+        {
+            "name": "Platform support",
+            "email": "support@sli-system.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
