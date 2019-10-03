@@ -1,3 +1,5 @@
+
+
 ## Original Package Description
 
 LSC integrates Magento with SLI's SaaS based Learning Search, Learning Navigation and user based SEO products.
